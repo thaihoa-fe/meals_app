@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:great_meals/widgets/meal_item.dart';
 import '../models/meal.dart';
 import '../models/category.dart';
-import '../dummy_data.dart';
 
 class CategoryMealsScreen extends StatefulWidget {
   static final String routeName = 'category-meals';
   final Map<String, bool> filters;
+  final List<Meal> meals;
 
-  const CategoryMealsScreen(this.filters);
+  const CategoryMealsScreen(this.meals, this.filters);
 
   @override
   _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
@@ -21,7 +21,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
   void initState() {
     super.initState();
 
-    allMeals = DUMMY_MEALS;
+    allMeals = widget.meals;
   }
 
   void deleteMeal(String mealId) {
@@ -43,20 +43,19 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
 
   List<Meal> get visibleMeals {
     return allMeals.where((meal) {
-      bool isValid = true;
       if (widget.filters['gluten'] && !meal.isGlutenFree) {
-        isValid = false;
+        return false;
       }
       if (widget.filters['vegan'] && !meal.isVegan) {
-        isValid = false;
+        return false;
       }
       if (widget.filters['vegeterian'] && !meal.isVegetarian) {
-        isValid = false;
+        return false;
       }
       if (widget.filters['lactose'] && !meal.isLactoseFree) {
-        isValid = false;
+        return false;
       }
-      return isValid;
+      return true;
     }).toList();
   }
 
@@ -69,7 +68,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
       body: ListView.builder(
         itemCount: visibleMeals.length,
         itemBuilder: (_, i) {
-          return MealItem(visibleMeals[i], deleteMeal);
+          return MealItem(meal: visibleMeals[i]);
         },
       ),
     );

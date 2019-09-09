@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final color = {
+const color = {
   50: Color.fromRGBO(11, 22, 101, .1),
   100: Color.fromRGBO(11, 22, 101, .2),
   200: Color.fromRGBO(11, 22, 101, .3),
@@ -13,7 +13,7 @@ final color = {
   900: Color.fromRGBO(11, 22, 101, 1),
 };
 
-final companyColor = MaterialColor(0xFF0D0D51, color);
+final companyColor = const MaterialColor(0xFF0D0D51, color);
 
 final theme = ThemeData(
   fontFamily: 'Raleway',

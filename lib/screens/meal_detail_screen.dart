@@ -3,6 +3,9 @@ import '../dummy_data.dart';
 
 class MealDetail extends StatelessWidget {
   static final String routeName = 'meal-detail';
+  final Function toggleFavourite;
+  final Function isFavouriteMeal;
+  const MealDetail(this.toggleFavourite, this.isFavouriteMeal);
 
   Widget _buildSectionTitle(String title, BuildContext context) {
     final themeData = Theme.of(context);
@@ -72,21 +75,22 @@ class MealDetail extends StatelessWidget {
                 context),
             _buildSectionTitle('Steps', context),
             _buildContainer(
-                ListView.separated(
-                  separatorBuilder: (_, i) => Divider(),
-                  itemCount: meal.steps.length,
-                  itemBuilder: (_, i) => ListTile(
-                    leading: CircleAvatar(
-                      child: Text('${i + 1}'),
-                    ),
-                    title: Text(
-                      meal.steps[i],
-                      style: themeData.textTheme.body1,
-                    ),
+              ListView.separated(
+                separatorBuilder: (_, i) => Divider(),
+                itemCount: meal.steps.length,
+                itemBuilder: (_, i) => ListTile(
+                  leading: CircleAvatar(
+                    child: Text('${i + 1}'),
+                  ),
+                  title: Text(
+                    meal.steps[i],
+                    style: themeData.textTheme.body1,
                   ),
                 ),
-                context,
-                300),
+              ),
+              context,
+              300,
+            ),
             const SizedBox(
               height: 40,
             ),
@@ -94,9 +98,12 @@ class MealDetail extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
+        child: Icon(
+          isFavouriteMeal(mealId) ? Icons.favorite : Icons.favorite_border,
+          color: Colors.white,
+        ),
         onPressed: () {
-          Navigator.of(context).pop(meal.id);
+          toggleFavourite(mealId);
         },
       ),
     );

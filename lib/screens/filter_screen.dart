@@ -62,6 +62,12 @@ class _FilterScreenState extends State<FilterScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('hi'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: _handleChangeFilter,
+          )
+        ],
       ),
       drawer: MainDrawer(),
       body: Column(
@@ -114,12 +120,6 @@ class _FilterScreenState extends State<FilterScreen> {
                     });
                   },
                 ),
-                RaisedButton(
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  child: Text('Update filter'),
-                  onPressed: _handleChangeFilter,
-                )
               ],
             ),
           )

@@ -4,16 +4,16 @@ import '../screens/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
   final Meal meal;
-  final Function deleteMeal;
+  Function popHandler;
 
-  const MealItem(this.meal, this.deleteMeal);
+  MealItem({this.meal, this.popHandler});
 
   void selectMeal(BuildContext context) {
     Navigator.of(context)
         .pushNamed(MealDetail.routeName, arguments: meal.id)
-        .then((result) {
-      if (result != null) {
-        deleteMeal(result);
+        .then((_) {
+      if (popHandler != null) {
+        popHandler();
       }
     });
   }
